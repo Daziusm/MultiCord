@@ -1,0 +1,90 @@
+{
+  "name": "multicord",
+  "version": "1.0.0",
+  "description": "Multi-account Discord client built with Electron",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --dev",
+    "build": "electron-builder",
+    "build-win": "electron-builder --win",
+    "build-mac": "electron-builder --mac",
+    "build-linux": "electron-builder --linux",
+    "pack": "electron-packager . MultiCord --platform=win32 --arch=x64 --out=dist --overwrite",
+    "pack-installer": "npm run pack && node build-installer.js",
+    "rebuild": "electron-rebuild",
+    "get-vencord-web": "node get-vencord-web.js",
+    "get-tampermonkey": "node get-tampermonkey.js"
+  },
+  "keywords": [
+    "discord",
+    "electron",
+    "multi-account"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "electron-builder": "^24.6.4",
+    "electron-packager": "^17.1.2",
+    "electron-rebuild": "^3.2.9",
+    "electron-winstaller": "^5.4.0",
+    "png-to-ico": "^2.1.8"
+  },
+  "dependencies": {
+    "adm-zip": "^0.5.16",
+    "electron-store": "^8.1.0"
+  },
+  "build": {
+    "appId": "com.multicord.app",
+    "productName": "MultiCord",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "extensions/**/*",
+      "node_modules/**/*",
+      "!node_modules/.cache"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "src/assets/icon.ico"
+    },
+    "portable": {
+      "artifactName": "MultiCord-Setup.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "src/assets/icon.ico",
+      "uninstallerIcon": "src/assets/icon.ico",
+      "installerHeaderIcon": "src/assets/icon.ico",
+      "createDesktopShortcut": "always",
+      "createStartMenuShortcut": true,
+      "menuCategory": "MultiCord",
+      "shortcutName": "MultiCord",
+      "artifactName": "MultiCord-Setup-${version}.exe",
+      "deleteAppDataOnUninstall": true,
+      "displayLanguageSelector": false,
+      "installerLanguages": [
+        "en_US"
+      ],
+      "language": "1033",
+      "multiLanguageInstaller": false,
+      "packElevateHelper": false,
+      "perMachine": false,
+      "runAfterFinish": true,
+      "license": false
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "src/assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "src/assets/icon.png"
+    }
+  }
+}

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MultiCord</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Account Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <h2>MultiCord</h2>
+                <button id="addAccountBtn" class="add-account-btn" title="Add Account">+</button>
+            </div>
+            
+            <div class="accounts-list" id="accountsList">
+                <!-- Account items will be dynamically populated -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="settings-btn" id="settingsBtn" title="Settings">⚙️</div>
+            </div>
+        </div>
+
+        <!-- Resize Handle -->
+        <div class="resize-handle" id="resizeHandle"></div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <div class="discord-container" id="discordContainer">
+                <!-- Discord BrowserViews will be managed by the main process -->
+            </div>
+            
+            <!-- Loading screen -->
+            <div class="loading-screen" id="loadingScreen">
+                <div class="loading-spinner"></div>
+                <p>Loading Discord...</p>
+            </div>
+            
+            <!-- Welcome screen -->
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="welcome-content">
+                    <h1>Welcome to MultiCord</h1>
+                    <p>Select an account from the sidebar to get started</p>
+                    <p>Click the + button to add a new account</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Account Modal -->
+    <div class="modal" id="addAccountModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Add New Account</h3>
+                <span class="modal-close" id="modalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="accountName">Account Name:</label>
+                    <input type="text" id="accountName" placeholder="Enter account name">
+                </div>
+                <div class="form-actions">
+                    <button id="cancelBtn" class="btn btn-secondary">Cancel</button>
+                    <button id="saveAccountBtn" class="btn btn-primary">Add Account</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Settings Modal -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>⚙️ MultiCord Settings</h3>
+                <span class="modal-close" id="settingsModalClose">&times;</span>
+            </div>
+            <div class="modal-body">
+                <div class="settings-section">
+                    <h4>🎨 Appearance</h4>
+                    <div class="scale-control">
+                        <label for="profileScaleRange">Profile Size:</label>
+                        <div class="scale-slider-container">
+                            <span class="scale-label">Small</span>
+                            <input type="range" id="profileScaleRange" min="0.7" max="2.0" step="0.1" value="1.0">
+                            <span class="scale-label">Large</span>
+                        </div>
+                        <span id="scaleValue" class="scale-value">100%</span>
+                    </div>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>🔧 Debugging Tools</h4>
+                    <button id="testSessionsBtn" class="btn btn-primary">Test Session Persistence</button>
+                    <button id="openMainDevToolsBtn" class="btn btn-secondary">Open Main DevTools</button>
+                    <button id="clearAllSessionsBtn" class="btn btn-danger">Clear All Sessions</button>
+                </div>
+                
+                <div class="settings-section">
+                    <h4>📊 Application Info</h4>
+                    <div class="info-item">
+                        <strong>Version:</strong> <span id="appVersion">1.0.0</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Vencord:</strong> <span id="vencordStatus">Loading...</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Active Sessions:</strong> <span id="sessionCount">0</span>
+                    </div>
+                </div>
+
+                <div class="settings-section">
+                    <h4>🔗 Quick Actions</h4>
+                    <button id="reloadAllAccountsBtn" class="btn btn-secondary">Reload All Accounts</button>
+                    <button id="exportSettingsBtn" class="btn btn-secondary">Export Settings</button>
+                    <button id="importSettingsBtn" class="btn btn-secondary">Import Settings</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div class="context-menu" id="contextMenu">
+        <div class="context-item" id="renameAccount">Rename</div>
+        <div class="context-item" id="removeAccount">Remove</div>
+        <div class="context-item" id="clearSession">Clear Session</div>
+        <div class="context-separator"></div>
+        <div class="context-item" id="openDevTools">Open DevTools (F12)</div>
+        <div class="context-item" id="refreshAccount">Refresh (F5)</div>
+    </div>
+
+    <script src="renderer.js"></script>
+</body>
+</html> 
