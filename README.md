@@ -4,7 +4,7 @@
 
 MultiCord allows you to seamlessly switch between multiple Discord accounts in a single, elegant application. Perfect for managing personal, work, and community Discord accounts without the hassle of constant logging in and out.
 
-![MultiCord Banner](https://raw.githubusercontent.com/Daziusm/Daziusm/refs/heads/main/MultiCordBanner.png)
+![MultiCord Banner](https://raw.githubusercontent.com/Daziusm/Daziusm/refs/heads/main/Showcase.png)
 
 ## ✨ Features
 
