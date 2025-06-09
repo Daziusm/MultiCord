@@ -208,6 +208,7 @@ npm run get-vencord-web    # Download Vencord Web extension
 npm run get-tampermonkey   # Download Tampermonkey extension
 
 # Icon Tools
+```
 node convert-icon.js       # Convert PNG to ICO format
 ```
 
