@@ -117,12 +117,7 @@ npm run dev                 # Run with DevTools enabled
 # Building
 npm run pack               # Create portable version
 npm run pack-installer     # Create installer
-npm run build-win         # Build for Windows (electron-builder)
-
-# Extension-specific builds
-npm run build-equicord     # Build MultiCord with Equicord extension
-npm run build-vencord      # Build MultiCord with Vencord extension
-npm run build-both         # Build both versions
+npm run build-win         # Build installer for Windows
 
 # Extensions
 npm run get-equicord-web   # Download Equicord Web extension
@@ -327,10 +322,6 @@ Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTIN
 - **MultiCord (Vencord)**: Latest version with Vencord extension
 - **Source Code**: Fully open source and available for contribution
 
-### 🔄 Updating GitHub
-```bash
-npm run update-github  # Commit and push all changes to GitHub
-```
 
 ---
 
