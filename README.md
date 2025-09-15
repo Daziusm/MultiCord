@@ -3,7 +3,7 @@
 
 MultiCord is a multi‑account Discord client for Windows built on Electron. It provides isolated sessions per account and fast switching in a single desktop window.
 
-![MultiCord Banner](https://raw.githubusercontent.com/Daziusm/Daziusm/refs/heads/main/Showcase.png)
+![MultiCord Banner](https://raw.githubusercontent.com/Daziusm/Daziusm/refs/heads/main/showcase.png)
 
 ## Features
 
