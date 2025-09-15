@@ -16,9 +16,10 @@
     "get-equicord-web": "node get-equicord-web.js",
     "get-vencord-web": "node get-vencord-web.js",
     "get-tampermonkey": "node get-tampermonkey.js",
-    "build-equicord": "echo 'Use build-win after configuring for Equicord'",
-    "build-vencord": "echo 'Use build-win after configuring for Vencord'",
-    "build-both": "echo 'Build each version separately'"
+    "build-equicord": "node build-versions.js equicord",
+    "build-vencord": "node build-versions.js vencord",
+    "build-both": "npm run build-equicord && npm run build-vencord",
+    "update-github": "node update-github.js"
   },
   "keywords": [
     "discord",

@@ -8,46 +8,45 @@
 </head>
 <body>
     <div class="app-container">
-        <!-- Account Sidebar -->
-        <div class="sidebar" id="sidebar">
-            <div class="sidebar-header">
-                <h2>MultiCord</h2>
-                <button id="addAccountBtn" class="add-account-btn" title="Add Account">+</button>
+        <!-- New App Header -->
+        <header id="appHeader" class="app-header">
+            <div class="brand">
+                <span class="brand-dot"></span>
+                <h1 class="brand-title">MultiCord</h1>
             </div>
-            
-            <div class="accounts-list" id="accountsList">
-                <!-- Account items will be dynamically populated -->
+            <div class="header-actions">
+                <input id="accountSearch" class="search-input" type="text" placeholder="Search accounts" autocomplete="off"/>
+                <button id="addAccountBtn" class="btn btn-primary" title="Add Account">Add</button>
+                <button id="settingsBtn" class="btn" title="Settings">Settings</button>
             </div>
-            
-            <div class="sidebar-footer">
-                <div class="settings-btn" id="settingsBtn" title="Settings">⚙️</div>
-            </div>
-        </div>
+        </header>
 
-        <!-- Resize Handle -->
-        <div class="resize-handle" id="resizeHandle"></div>
+        <!-- Avatar Tabs -->
+        <nav id="avatarTabs" class="avatar-tabs" aria-label="Accounts">
+            <!-- Filled dynamically with avatar tab buttons -->
+        </nav>
 
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <div class="discord-container" id="discordContainer">
-                <!-- Discord BrowserViews will be managed by the main process -->
-            </div>
-            
-            <!-- Loading screen -->
-            <div class="loading-screen" id="loadingScreen">
-                <div class="loading-spinner"></div>
-                <p>Loading Discord...</p>
-            </div>
-            
-            <!-- Welcome screen -->
-            <div class="welcome-screen" id="welcomeScreen">
-                <div class="welcome-content">
-                    <h1>Welcome to MultiCord</h1>
-                    <p>Select an account from the sidebar to get started</p>
-                    <p>Click the + button to add a new account</p>
+        <!-- New Main Layout -->
+        <main class="app-main">
+            <!-- Optional accounts panel removed for icon tabs layout -->
+
+            <section id="discordStage" class="stage">
+                <div class="discord-container" id="discordContainer"></div>
+                <!-- Loading overlay removed -->
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-content">
+                        <div class="welcome-hero">
+                            <h1 class="hero-title">MultiCord</h1>
+                            <p class="hero-subtitle">Manage multiple Discord accounts with clarity and speed.</p>
+                            <div class="hero-ctas">
+                                <button id="heroAddAccountBtn" class="btn btn-primary btn-lg">Add Account</button>
+                                <button id="heroOpenSettingsBtn" class="btn btn-secondary btn-lg">Open Settings</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </section>
+        </main>
     </div>
 
     <!-- Add Account Modal -->
@@ -74,12 +73,12 @@
     <div class="modal" id="settingsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3>⚙️ MultiCord Settings</h3>
+                <h3>Settings</h3>
                 <span class="modal-close" id="settingsModalClose">&times;</span>
             </div>
             <div class="modal-body">
                 <div class="settings-section">
-                    <h4>🎨 Appearance</h4>
+                    <h4>Appearance</h4>
                     <div class="scale-control">
                         <label for="profileScaleRange">Profile Size:</label>
                         <div class="scale-slider-container">
@@ -92,14 +91,14 @@
                 </div>
                 
                 <div class="settings-section">
-                    <h4>🔧 Debugging Tools</h4>
+                    <h4>Developer Tools</h4>
                     <button id="testSessionsBtn" class="btn btn-primary">Test Session Persistence</button>
                     <button id="openMainDevToolsBtn" class="btn btn-secondary">Open Main DevTools</button>
                     <button id="clearAllSessionsBtn" class="btn btn-danger">Clear All Sessions</button>
                 </div>
                 
                 <div class="settings-section">
-                    <h4>📊 Application Info</h4>
+                    <h4>Application Info</h4>
                     <div class="info-item">
                         <strong>Version:</strong> <span id="appVersion">1.0.0</span>
                     </div>
@@ -112,7 +111,7 @@
                 </div>
 
                 <div class="settings-section">
-                    <h4>🔗 Quick Actions</h4>
+                    <h4>Quick Actions</h4>
                     <button id="reloadAllAccountsBtn" class="btn btn-secondary">Reload All Accounts</button>
                     <button id="exportSettingsBtn" class="btn btn-secondary">Export Settings</button>
                     <button id="importSettingsBtn" class="btn btn-secondary">Import Settings</button>

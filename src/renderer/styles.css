@@ -5,217 +5,184 @@
 }
 
 :root {
-    --bg-primary: #0a0a0a;
-    --bg-secondary: #121212;
-    --bg-tertiary: #1a1a1a;
-    --surface: #1e1e1e;
-    --surface-elevated: #2a2a2a;
-    --surface-light: #333333;
-    --accent: #ffffff;
-    --accent-muted: #e0e0e0;
-    --accent-dark: #999999;
+    /* Pure white and black palette */
+    --bg-primary: #000000;
+    --bg-secondary: #0a0a0a;
+    --surface: #111111;
+    --surface-elevated: #1a1a1a;
     --text-primary: #ffffff;
-    --text-secondary: #b3b3b3;
-    --text-muted: #666666;
+    --text-secondary: #888888;
+    --text-muted: #444444;
     --border: rgba(255, 255, 255, 0.1);
     --border-strong: rgba(255, 255, 255, 0.2);
-    
-    /* Reduced Shadows - Monochrome */
-    --shadow-neumorphic-dark: 
-        inset 2px 2px 4px rgba(0, 0, 0, 0.3),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.02);
-    --shadow-neumorphic-light: 
-        inset 1px 1px 3px rgba(0, 0, 0, 0.2),
-        inset -1px -1px 3px rgba(255, 255, 255, 0.05);
-    --shadow-elevated: 
-        2px 2px 8px rgba(0, 0, 0, 0.3),
-        -1px -1px 4px rgba(255, 255, 255, 0.02);
-    --shadow-pressed: 
-        inset 2px 2px 4px rgba(0, 0, 0, 0.4),
-        inset -2px -2px 4px rgba(255, 255, 255, 0.01);
-    --shadow-glow: 0 0 10px rgba(255, 255, 255, 0.05);
-    
-    /* Gradients - Monochrome */
-    --gradient-surface: linear-gradient(145deg, #1e1e1e, #0a0a0a);
-    --gradient-surface-light: linear-gradient(145deg, #2a2a2a, #1a1a1a);
-    --gradient-button: linear-gradient(145deg, #333333, #1e1e1e);
-    --gradient-button-hover: linear-gradient(145deg, #404040, #2a2a2a);
-    --gradient-accent: linear-gradient(145deg, #ffffff, #e0e0e0);
-    --gradient-accent-dark: linear-gradient(145deg, #999999, #666666);
-    --gradient-text: linear-gradient(145deg, #ffffff, #cccccc);
-    
-    /* Animation Variables */
-    --transition-smooth: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    --transition-bounce: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    --transition-fast: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-    
-    /* Profile Scaling Variables */
+
+    /* Motion */
+    --transition-smooth: all 0.2s ease;
+    --transition-fast: all 0.1s ease;
+
+    /* Typography */
+    --font-size-xs: 11px;
+    --font-size-sm: 12px;
+    --font-size-md: 14px;
+    --font-size-lg: 16px;
+    --font-size-xl: 18px;
+    --font-size-2xl: 24px;
+    --font-size-3xl: 32px;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-bold: 600;
+
+    /* Layout */
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --shadow-subtle: 0 1px 3px rgba(0,0,0,0.3);
+    --shadow-medium: 0 4px 12px rgba(0,0,0,0.4);
+    --sidebar-width: 240px;
+
+    /* Layout offsets */
+    --header-height: 16px;
+    --tabs-height: 68px; /* match main.js tabsMinHeight */
+    --modal-top-offset: calc(var(--header-height) + var(--tabs-height));
+
+    /* Profiles */
     --profile-scale: 1.0;
     --avatar-size: calc(36px * var(--profile-scale));
+    --avatar-tab-size: calc(44px * var(--profile-scale));
     --account-padding: calc(12px * var(--profile-scale));
     --font-scale-name: calc(14px * var(--profile-scale));
     --font-scale-status: calc(11px * var(--profile-scale));
-    
-    /* Sidebar Width */
-    --sidebar-width: 240px;
 }
 
 body {
-    font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     background: var(--bg-primary);
     color: var(--text-primary);
     overflow: hidden;
     user-select: none;
-    font-weight: 400;
+    font-weight: var(--font-weight-regular);
     letter-spacing: -0.01em;
     line-height: 1.4;
-    font-size: 14px;
+    font-size: var(--font-size-md);
 }
 
 .app-container {
-    display: flex;
+    display: grid;
+    grid-template-rows: 56px 44px 1fr;
     height: 100vh;
     width: 100vw;
-    background: var(--gradient-surface);
-    position: relative;
+    background: var(--bg-primary);
 }
+.avatar-tabs {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 16px;           /* inner spacing all around */
+    margin: 0 0 12px 0;           /* small space below */
+    min-height: 68px;             /* baseline; actual height grows with content */
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    overflow-x: auto;
+}
+.avatar-tab { width: var(--avatar-tab-size); height: var(--avatar-tab-size); border-radius: 10px; border: 1px solid var(--border); background: var(--surface-elevated); display: grid; place-items: center; cursor: pointer; transition: var(--transition-smooth); flex: 0 0 auto; overflow: hidden; position: relative; }
+.avatar-tab img {
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    display: block;
+    object-fit: cover;
+    border-radius: inherit;
+    transform: translate(-1px, -1px); /* bleed under the 1px border to avoid visible seams */
+}
+.avatar-tab:hover { transform: translateY(-1px); border-color: var(--border-strong); }
+.avatar-tab.active { border-color: var(--text-primary); }
 
-/* Animated Background */
+/* Subtle background texture */
 .app-container::before {
     content: '';
     position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    inset: 0;
     background: 
-        radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.015) 0%, transparent 50%),
-        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.01) 0%, transparent 50%),
-        radial-gradient(circle at 40% 40%, rgba(0, 0, 0, 0.3) 0%, transparent 50%);
-    animation: backgroundPulse 25s ease-in-out infinite;
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.02) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(255,255,255,0.01) 0%, transparent 50%);
     pointer-events: none;
-    z-index: 0;
 }
 
-@keyframes backgroundPulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.8; }
-}
-
-/* Sidebar Styles */
-.sidebar {
-    width: var(--sidebar-width);
-    min-width: 90px; /* Minimum resize limit */
-    max-width: 400px;
-    background: var(--gradient-surface);
-    border-right: 1px solid var(--border);
+/* Header */
+.app-header {
     display: flex;
-    flex-direction: column;
-    position: relative;
-    box-shadow: var(--shadow-neumorphic-dark);
-    z-index: 10;
-    transition: none; /* Disable transition during resize */
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
 }
+
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-primary); display: inline-block; }
+.brand-title { font-size: var(--font-size-xl); font-weight: var(--font-weight-bold); }
+
+.header-actions { display: flex; align-items: center; gap: 8px; }
+.search-input { width: 220px; padding: 8px 10px; border-radius: var(--radius-sm); border: 1px solid var(--border); background: var(--surface-elevated); color: var(--text-primary); }
+
+/* Main */
+.app-main { display: grid; grid-template-columns: 1fr; gap: 0; padding: 0; }
+
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; flex-direction: column; min-width: 0; }
+.panel-header { padding: 10px; border-bottom: 1px solid var(--border); }
+.accounts-panel { overflow: hidden; }
+.accounts-grid { padding: 10px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; overflow-y: auto; }
+.account-tile { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 10px; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); cursor: pointer; transition: var(--transition-smooth); }
+.account-tile:hover { background: var(--surface-elevated); border-color: var(--border-strong); transform: translateY(-1px); }
+.account-avatar { width: 44px; height: 44px; border-radius: 10px; background: var(--surface-elevated); display: grid; place-items: center; color: var(--text-primary); border: 1px solid var(--border); overflow: hidden; }
+.account-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+.account-name { font-size: var(--font-size-sm); font-weight: var(--font-weight-medium); text-align: center; }
+.account-status { font-size: var(--font-size-xs); color: var(--text-secondary); }
+
+.stage { position: relative; background: transparent; border: none; border-radius: 0; overflow: hidden; }
+.discord-container { width: 100%; height: 100%; position: absolute; inset: 0; }
 
 .sidebar-header {
-    padding: 16px 18px;
+    padding: 20px 18px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: var(--gradient-surface-light);
-    box-shadow: var(--shadow-neumorphic-light);
-    margin: 8px;
-    border-radius: 12px;
-    border: none;
+    background: var(--surface);
     position: relative;
-    overflow: hidden;
-}
-
-.sidebar-header::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, transparent 50%);
-    border-radius: inherit;
-    opacity: 0;
-    transition: var(--transition-smooth);
-}
-
-.sidebar-header:hover::before {
-    opacity: 1;
 }
 
 .sidebar-header h2 {
     color: var(--text-primary);
-    font-size: 18px;
-    font-weight: 700;
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-bold);
     letter-spacing: -0.02em;
-    background: var(--gradient-text);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    position: relative;
-    animation: titleGlow 6s ease-in-out infinite;
+    margin: 0;
 }
 
-@keyframes titleGlow {
-    0%, 100% { filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.2)); }
-    50% { filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.4)); }
-}
 
 .add-account-btn {
     width: 32px;
     height: 32px;
-    border-radius: 10px;
-    background: var(--gradient-button);
-    border: none;
+    border-radius: var(--radius-sm);
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
     color: var(--text-primary);
     font-size: 16px;
-    font-weight: 300;
+    font-weight: var(--font-weight-medium);
     cursor: pointer;
-    transition: var(--transition-bounce);
-    box-shadow: var(--shadow-elevated);
+    transition: var(--transition-smooth);
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    overflow: hidden;
-}
-
-.add-account-btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0;
-    height: 0;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
-    border-radius: 50%;
-    transition: var(--transition-smooth);
-    transform: translate(-50%, -50%);
 }
 
 .add-account-btn:hover {
-    background: var(--gradient-button-hover);
-    transform: translateY(-2px) scale(1.05);
-    box-shadow: 
-        4px 4px 12px rgba(0, 0, 0, 0.4),
-        -2px -2px 8px rgba(255, 255, 255, 0.04),
-        var(--shadow-glow);
-}
-
-.add-account-btn:hover::before {
-    width: 100%;
-    height: 100%;
+    background: var(--surface);
+    border-color: var(--border-strong);
 }
 
 .add-account-btn:active {
-    transform: translateY(0) scale(0.95);
-    box-shadow: var(--shadow-pressed);
+    transform: translateY(1px);
 }
 
 .accounts-list {
@@ -224,57 +191,51 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
 }
 
-.account-item {
+.account-tile {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    padding: var(--account-padding) calc(var(--account-padding) + 2px);
-    border-radius: 12px;
+    gap: 8px;
+    padding: 10px;
+    border-radius: var(--radius-md);
     cursor: pointer;
-    margin-bottom: 8px;
     position: relative;
     transition: var(--transition-smooth);
-    background: var(--gradient-surface-light);
-    box-shadow: var(--shadow-neumorphic-light);
+    background: var(--surface);
     border: 1px solid var(--border);
-    overflow: hidden;
 }
 
-.account-item::before {
+.account-tile::before {
     content: '';
     position: absolute;
     top: 0;
     left: -100%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.08), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
     transition: var(--transition-smooth);
 }
 
-.account-item:hover::before {
+.account-tile:hover::before {
     left: 100%;
 }
 
-.account-item:hover {
-    transform: translateY(-1px) translateX(2px);
-    box-shadow: var(--shadow-elevated);
-    background: var(--gradient-button-hover);
+.account-tile:hover {
+    transform: translateY(-1px);
+    background: var(--surface-elevated);
     border-color: var(--border-strong);
 }
 
-.account-item.active {
-    background: var(--gradient-accent);
-    color: var(--bg-primary);
-    box-shadow: 
-        inset 1px 1px 3px rgba(0, 0, 0, 0.2),
-        inset -1px -1px 3px rgba(255, 255, 255, 0.4),
-        var(--shadow-glow);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    transform: translateY(-1px);
+.account-tile.active {
+    border-color: var(--border-strong);
 }
 
-.account-item.active:hover {
+.account-tile.active:hover {
     transform: translateY(-2px) translateX(1px);
     box-shadow: 
         inset 1px 1px 3px rgba(0, 0, 0, 0.2),
@@ -286,11 +247,11 @@ body {
     width: var(--avatar-size);
     height: var(--avatar-size);
     border-radius: 10px;
-    background: var(--gradient-accent-dark);
+    background: var(--surface-elevated);
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: var(--account-padding);
+    margin-right: 0;
     font-weight: 700;
     font-size: calc(var(--avatar-size) * 0.4);
     color: var(--text-primary);
@@ -303,13 +264,7 @@ body {
     transition: var(--transition-smooth);
 }
 
-.account-item.active .account-avatar {
-    background: var(--gradient-surface);
-    color: var(--text-primary);
-    box-shadow: 
-        inset 1px 1px 2px rgba(0, 0, 0, 0.3),
-        inset -1px -1px 2px rgba(255, 255, 255, 0.1);
-}
+.account-tile.active .account-avatar { background: var(--surface); color: var(--text-primary); }
 
 .account-avatar::before {
     content: '';
@@ -324,7 +279,7 @@ body {
     transition: var(--transition-smooth);
 }
 
-.account-item:hover .account-avatar::before {
+.account-tile:hover .account-avatar::before {
     opacity: 1;
 }
 
@@ -394,23 +349,21 @@ body {
 }
 
 .account-name {
-    font-weight: 600;
-    font-size: var(--font-scale-name);
+    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-sm);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    margin-bottom: 2px;
+    margin-bottom: 0;
     letter-spacing: -0.01em;
     transition: var(--transition-fast);
+    text-align: center;
 }
 
-.account-item.active .account-name {
-    color: var(--bg-primary);
-    font-weight: 700;
-}
+.account-tile.active .account-name { font-weight: var(--font-weight-bold); }
 
 .account-status {
-    font-size: var(--font-scale-status);
+    font-size: var(--font-size-xs);
     color: var(--text-secondary);
     white-space: nowrap;
     overflow: hidden;
@@ -436,10 +389,7 @@ body {
     50% { opacity: 0.7; }
 }
 
-.account-item.active .account-status {
-    color: var(--bg-primary);
-    font-weight: 700;
-}
+.account-tile.active .account-status { font-weight: var(--font-weight-medium); }
 
 .account-item.active .account-status.in-voice {
     color: #4fc3f7;
@@ -511,20 +461,20 @@ body {
 .main-content {
     flex: 1;
     position: relative;
-    background: var(--gradient-surface);
-    border-radius: 16px 0 0 0;
+    background: var(--surface);
+    border-radius: var(--radius-md) 0 0 0;
     overflow: hidden;
-    margin: 8px 8px 8px 0;
-    box-shadow: var(--shadow-neumorphic-dark);
+    margin: 4px 4px 4px 0;
+    box-shadow: var(--shadow-subtle);
     z-index: 5;
-    width: calc(100vw - var(--sidebar-width) - 4px);
+    width: calc(100vw - var(--sidebar-width) - 2px);
 }
 
 .discord-container {
     width: 100%;
     height: 100%;
     position: relative;
-    border-radius: 16px 0 0 0;
+    border-radius: var(--radius-md) 0 0 0;
     overflow: hidden;
 }
 
@@ -549,13 +499,13 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: var(--gradient-surface);
+    background: var(--surface);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     z-index: 1000;
-    border-radius: 16px 0 0 0;
+    border-radius: var(--radius-md) 0 0 0;
 }
 
 .loading-screen.hidden {
@@ -667,9 +617,9 @@ body {
     position: fixed;
     z-index: 2000;
     left: 0;
-    top: 0;
+    top: var(--modal-top-offset);
     width: 100%;
-    height: 100%;
+    height: calc(100vh - var(--modal-top-offset));
     background: rgba(0, 0, 0, 0.85);
     backdrop-filter: blur(10px);
     animation: modalFadeIn 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
@@ -687,17 +637,13 @@ body {
 }
 
 .modal-content {
-    background: var(--gradient-surface);
-    border-radius: 16px;
-    width: 90%;
-    max-width: 440px;
-    box-shadow: 
-        8px 8px 20px rgba(0, 0, 0, 0.4),
-        -4px -4px 12px rgba(255, 255, 255, 0.04),
-        inset 1px 1px 0 rgba(255, 255, 255, 0.1);
-    animation: modalSlideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    border: 1px solid var(--border-strong);
-    overflow: hidden;
+    background: var(--surface);
+    border-radius: 12px;
+    width: min(920px, 92vw);
+    max-height: calc(100vh - 120px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+    border: 1px solid var(--border);
+    overflow: auto;
     position: relative;
 }
 
@@ -713,13 +659,15 @@ body {
 }
 
 .modal-header {
-    padding: 20px 24px 16px;
+    padding: 16px 20px;
     border-bottom: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), transparent);
-    position: relative;
+    background: transparent;
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
 
 .modal-header h3 {
@@ -735,19 +683,17 @@ body {
 
 .modal-close {
     color: var(--text-secondary);
-    font-size: 24px;
+    font-size: 18px;
     cursor: pointer;
-    transition: var(--transition-bounce);
-    width: 36px;
-    height: 36px;
+    transition: var(--transition-fast);
+    width: 32px;
+    height: 32px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    background: var(--gradient-button);
-    box-shadow: var(--shadow-elevated);
-    position: relative;
-    overflow: hidden;
+    background: transparent;
+    border: 1px solid var(--border);
 }
 
 .modal-close::before {
@@ -763,15 +709,7 @@ body {
     transform: translate(-50%, -50%);
 }
 
-.modal-close:hover {
-    color: var(--text-primary);
-    background: linear-gradient(145deg, #ff4444, #cc3333);
-    transform: translateY(-1px) rotate(90deg) scale(1.1);
-    box-shadow: 
-        4px 4px 12px rgba(0, 0, 0, 0.4),
-        -2px -2px 8px rgba(255, 255, 255, 0.04),
-        0 0 10px rgba(255, 68, 68, 0.2);
-}
+.modal-close:hover { color: var(--text-primary); background: var(--surface-elevated); }
 
 .modal-close:hover::before {
     width: 120%;
@@ -785,6 +723,7 @@ body {
 
 .modal-body {
     padding: 20px 24px 24px;
+    overflow: auto;
 }
 
 .form-group {
@@ -909,19 +848,14 @@ body {
 
 /* Settings Modal Specific Styles */
 .settings-section {
-    margin-bottom: 20px;
-    padding: 18px;
-    background: var(--gradient-surface-light);
-    border-radius: 12px;
+    margin-bottom: 16px;
+    padding: 16px;
+    background: var(--surface-elevated);
+    border-radius: 10px;
     border: 1px solid var(--border);
-    box-shadow: var(--shadow-neumorphic-light);
-    transition: var(--transition-smooth);
 }
 
-.settings-section:hover {
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-elevated);
-}
+.settings-section:hover { background: var(--surface); }
 
 .settings-section h4 {
     margin: 0 0 16px 0;
@@ -986,20 +920,105 @@ body {
     box-shadow: var(--shadow-pressed);
 }
 
+/* Welcome hero */
+.welcome-screen {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--surface);
+}
+
+.welcome-content {
+    text-align: center;
+    max-width: 500px;
+    padding: 60px 40px;
+}
+
+.welcome-hero {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.hero-title {
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+    letter-spacing: -0.02em;
+    margin: 0;
+}
+
+.hero-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.hero-ctas {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 8px;
+}
+
+.btn {
+    border: 1px solid var(--border);
+    background: var(--surface-elevated);
+    color: var(--text-primary);
+    padding: 12px 20px;
+    border-radius: var(--radius-sm);
+    transition: var(--transition-smooth);
+    cursor: pointer;
+    font-size: var(--font-size-md);
+    font-weight: var(--font-weight-medium);
+}
+
+.btn:hover {
+    background: var(--surface);
+    border-color: var(--border-strong);
+}
+
+.btn:active { 
+    transform: translateY(1px);
+}
+
+.btn-primary {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border-color: var(--text-primary);
+}
+
+.btn-primary:hover {
+    background: var(--text-secondary);
+    border-color: var(--text-secondary);
+}
+
+.btn-secondary { 
+    background: transparent;
+}
+
+.btn-secondary:hover {
+    background: var(--surface-elevated);
+}
+
+.btn-lg { 
+    padding: 14px 24px; 
+    font-size: var(--font-size-lg);
+}
+
 /* Context Menu */
 .context-menu {
     position: fixed;
-    background: var(--gradient-surface);
-    border: 1px solid var(--border-strong);
-    border-radius: 12px;
-    padding: 8px 0;
+    background: var(--surface-elevated);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 6px 0;
     min-width: 160px;
-    box-shadow: 
-        6px 6px 16px rgba(0, 0, 0, 0.4),
-        -3px -3px 8px rgba(255, 255, 255, 0.04);
+    box-shadow: var(--shadow-medium);
     z-index: 3000;
     display: none;
-    backdrop-filter: blur(10px);
     overflow: hidden;
 }
 
@@ -1020,36 +1039,17 @@ body {
 }
 
 .context-item {
-    padding: 10px 16px;
+    padding: 8px 16px;
     color: var(--text-primary);
-    font-size: 13px;
+    font-size: var(--font-size-sm);
     cursor: pointer;
     transition: var(--transition-fast);
-    font-weight: 600;
+    font-weight: var(--font-weight-regular);
     position: relative;
     overflow: hidden;
 }
 
-.context-item::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--gradient-accent);
-    transition: var(--transition-smooth);
-    z-index: -1;
-}
-
-.context-item:hover {
-    color: var(--bg-primary);
-    transform: translateX(4px);
-}
-
-.context-item:hover::before {
-    left: 0;
-}
+.context-item:hover { background: rgba(255,255,255,0.04); }
 
 .context-separator {
     height: 1px;

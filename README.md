@@ -1,7 +1,7 @@
 
-# 🎭 MultiCord
+# MultiCord
 
-**A powerful multi-account Discord client built with Electron**
+A multi-account Discord client built with Electron. Manage multiple accounts with isolated sessions and quick switching in a single desktop app.
 
 MultiCord allows you to seamlessly switch between multiple Discord accounts in a single, elegant application. Perfect for managing personal, work, and community Discord accounts without the hassle of constant logging in and out.
 
@@ -9,26 +9,26 @@ MultiCord allows you to seamlessly switch between multiple Discord accounts in a
 
 ## ✨ Features
 
-### 🔀 **Multi-Account Management**
+### Multi-Account Management
 - **Unlimited Accounts**: Add and manage multiple Discord accounts
 - **Session Isolation**: Each account runs in its own session with persistent login
 - **Quick Switching**: One-click account switching with visual indicators
 - **Profile Pictures**: Automatic extraction and display of account avatars
 
-### 🎨 **Modern Interface**
+### Interface
 - **Resizable Sidebar**: Drag to resize from 90px to 400px width
 - **Responsive Design**: Sidebar adapts to show icons only when narrow
 - **Clean UI**: No menu bar clutter - just your Discord accounts
 - **Voice Status**: Real-time voice chat indicators with speaker icons
 
-### 🔧 **Advanced Features**
+### Advanced Features
 - **Context Menus**: Right-click accounts for rename, remove, and session management
 - **Dual Extension Support**: Built-in support for both Equicord and Vencord browser extensions
 - **Auto-Updates**: Modern installer with update support
 - **Persistent Sessions**: Stay logged in across application restarts
 - **DevTools Access**: F12 for debugging and development
 
-### 🚀 **Performance & Security**
+### Performance & Security
 - **BrowserView Architecture**: Each account runs in isolated browser instances
 - **WebAuthn Blocking**: Prevents annoying Windows Security prompts
 - **Session Persistence**: Secure storage of login sessions
@@ -117,7 +117,12 @@ npm run dev                 # Run with DevTools enabled
 # Building
 npm run pack               # Create portable version
 npm run pack-installer     # Create installer
-npm run build-win         # Build installer for Windows
+npm run build-win         # Build for Windows (electron-builder)
+
+# Extension-specific builds
+npm run build-equicord     # Build MultiCord with Equicord extension
+npm run build-vencord      # Build MultiCord with Vencord extension
+npm run build-both         # Build both versions
 
 # Extensions
 npm run get-equicord-web   # Download Equicord Web extension
@@ -143,7 +148,7 @@ node convert-icon.js       # Convert PNG to ICO format
 - IPC communication between main and renderer processes
 - Persistent storage for account data and user preferences
 
-## 🎯 Roadmap
+## Roadmap
 
 - [ ] **Themes**: Dark/Light theme switching
 - [ ] **Notifications**: Desktop notifications from all accounts
@@ -154,7 +159,7 @@ node convert-icon.js       # Convert PNG to ICO format
 - [ ] **macOS Support**: DMG distribution
 - [ ] **Auto-Start**: Launch with Windows startup
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Common Issues
 
@@ -183,18 +188,18 @@ node convert-icon.js       # Convert PNG to ICO format
 2. Create a new issue with detailed information
 3. Include your operating system and MultiCord version
 
-## 🔒 Privacy & Security
+## Privacy & Security
 
 - **Local Storage Only**: All data stored locally on your device
 - **No Data Collection**: MultiCord doesn't collect or transmit user data
 - **Session Isolation**: Accounts are completely isolated from each other
 - **Open Source**: Full source code available for audit
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - **Discord** - For the amazing platform
 - **Equicord** - For the excellent Discord enhancement extension
@@ -322,9 +327,13 @@ Contributions are welcome! Please read our [Contributing Guidelines](CONTRIBUTIN
 - **MultiCord (Vencord)**: Latest version with Vencord extension
 - **Source Code**: Fully open source and available for contribution
 
+### 🔄 Updating GitHub
+```bash
+npm run update-github  # Commit and push all changes to GitHub
+```
 
 ---
 
-**Made with ❤️ for the Discord community / synant**
+Made for the Discord community / synant
 
 *MultiCord is not affiliated with Discord Inc. Discord is a trademark of Discord Inc.*

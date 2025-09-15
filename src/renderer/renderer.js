@@ -5,6 +5,7 @@ class MultiCordApp {
         this.accounts = [];
         this.currentAccountId = null;
         this.contextMenuVisible = false;
+        this.filteredText = '';
         this.init();
     }
 
@@ -23,10 +24,24 @@ class MultiCordApp {
     }
 
     setupEventListeners() {
-        // Add account button
+        // Add account button (header + hero)
         document.getElementById('addAccountBtn').addEventListener('click', () => {
             this.showAddAccountModal();
         });
+
+        // Hero CTA buttons
+        const heroAdd = document.getElementById('heroAddAccountBtn');
+        if (heroAdd) {
+            heroAdd.addEventListener('click', () => {
+                this.showAddAccountModal();
+            });
+        }
+        const heroSettings = document.getElementById('heroOpenSettingsBtn');
+        if (heroSettings) {
+            heroSettings.addEventListener('click', () => {
+                this.showSettingsModal();
+            });
+        }
 
         // Modal close events
         document.getElementById('modalClose').addEventListener('click', () => {
@@ -131,8 +146,16 @@ class MultiCordApp {
             localStorage.setItem('profileScale', scale.toString());
         });
 
-        // Sidebar resize functionality
-        this.setupSidebarResize();
+        // Header search filter
+        const searchInput = document.getElementById('accountSearch');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                this.filteredText = e.target.value.toLowerCase();
+                this.renderAccounts();
+            });
+        }
+
+        // Removed sidebar resize in new layout
 
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
@@ -142,11 +165,7 @@ class MultiCordApp {
                 this.hideSettingsModal();
             }
             
-            // F12 or Ctrl+Shift+I to open DevTools for current account
-            if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
-                e.preventDefault();
-                this.openDevTools();
-            }
+            // DevTools shortcuts disabled
             
             // F5 or Ctrl+R to refresh current account
             if (e.key === 'F5' || (e.ctrlKey && e.key === 'r')) {
@@ -213,22 +232,37 @@ class MultiCordApp {
     }
 
     renderAccounts() {
-        const accountsList = document.getElementById('accountsList');
-        accountsList.innerHTML = '';
+        const accountsList = document.getElementById('accountsGrid') || document.getElementById('accountsList');
+        if (accountsList) accountsList.innerHTML = '';
 
-        this.accounts.forEach((account, index) => {
-            const accountElement = this.createAccountElement(account, index);
-            accountsList.appendChild(accountElement);
+        const tabsBar = document.getElementById('avatarTabs');
+        if (tabsBar) tabsBar.innerHTML = '';
+
+        // Filter accounts by search text
+        const visibleAccounts = this.accounts.filter(acc => {
+            if (!this.filteredText) return true;
+            return acc.name.toLowerCase().includes(this.filteredText);
+        });
+
+        visibleAccounts.forEach((account, index) => {
+            if (accountsList) {
+                const accountElement = this.createAccountElement(account, index);
+                accountsList.appendChild(accountElement);
+            }
+            if (tabsBar) {
+                const tab = this.createAvatarTab(account);
+                tabsBar.appendChild(tab);
+            }
         });
     }
 
     createAccountElement(account, index) {
         const accountDiv = document.createElement('div');
-        accountDiv.className = `account-item ${account.active ? 'active' : ''}`;
+        accountDiv.className = `account-tile ${account.active ? 'active' : ''}`;
         accountDiv.dataset.accountId = account.id;
 
         const avatarDiv = document.createElement('div');
-        avatarDiv.className = 'account-avatar';
+        avatarDiv.className = 'account-avatar tile-avatar';
         
         if (account.profilePicture) {
             const img = document.createElement('img');
@@ -249,14 +283,14 @@ class MultiCordApp {
         }
 
         const infoDiv = document.createElement('div');
-        infoDiv.className = 'account-info';
+        infoDiv.className = 'account-info tile-info';
 
         const nameDiv = document.createElement('div');
-        nameDiv.className = 'account-name';
+        nameDiv.className = 'account-name tile-name';
         nameDiv.textContent = account.name;
 
         const statusDiv = document.createElement('div');
-        statusDiv.className = 'account-status';
+        statusDiv.className = 'account-status tile-status';
         statusDiv.textContent = 'Ready'; // Always show 'Ready', voice status is shown via overlay
 
         infoDiv.appendChild(nameDiv);
@@ -278,6 +312,29 @@ class MultiCordApp {
             this.showContextMenu(e, account.id);
         });
         return accountDiv;
+    }
+
+    createAvatarTab(account) {
+        const tab = document.createElement('button');
+        tab.className = `avatar-tab ${account.active ? 'active' : ''}`;
+        tab.title = account.name;
+        if (account.profilePicture) {
+            const img = document.createElement('img');
+            img.src = account.profilePicture;
+            img.alt = account.name;
+            img.draggable = false;
+            tab.appendChild(img);
+        } else {
+            tab.textContent = account.name.charAt(0).toUpperCase();
+        }
+
+        tab.addEventListener('click', () => this.selectAccount(account.id));
+        tab.addEventListener('contextmenu', (e) => {
+            e.preventDefault();
+            this.showContextMenu(e, account.id);
+        });
+
+        return tab;
     }
 
     async selectAccount(accountId) {
@@ -357,11 +414,13 @@ class MultiCordApp {
     }
 
     showLoadingScreen() {
-        document.getElementById('loadingScreen').classList.remove('hidden');
+        // Loading overlay disabled for a cleaner layout
+        return;
     }
-
+    
     hideLoadingScreen() {
-        document.getElementById('loadingScreen').classList.add('hidden');
+        // Loading overlay disabled
+        return;
     }
 
     showAddAccountModal() {
@@ -415,20 +474,18 @@ class MultiCordApp {
         const contextMenu = document.getElementById('contextMenu');
         contextMenu.dataset.accountId = accountId;
         
-        // Position context menu in sidebar area to avoid overlapping with Discord
-        const sidebarWidth = 240;
+        // Position context menu with viewport bounds
         const menuWidth = 160;
         const menuHeight = 200; // approximate
         
         let left = event.pageX;
         let top = event.pageY;
         
-        // Keep menu within sidebar if possible
-        if (left + menuWidth > sidebarWidth) {
-            left = Math.max(10, sidebarWidth - menuWidth - 10);
+        // Keep menu within viewport
+        if (left + menuWidth > window.innerWidth) {
+            left = window.innerWidth - menuWidth - 10;
         }
         
-        // Adjust top if menu would go off screen
         if (top + menuHeight > window.innerHeight) {
             top = window.innerHeight - menuHeight - 10;
         }
@@ -436,14 +493,20 @@ class MultiCordApp {
         contextMenu.style.left = left + 'px';
         contextMenu.style.top = top + 'px';
         contextMenu.classList.add('show');
-        // Don't hide BrowserView - let context menu show in sidebar area
+        // Hide BrowserView so the context menu is interactable above it
+        ipcRenderer.invoke('hide-browser-view');
         this.contextMenuVisible = true;
     }
 
     hideContextMenu() {
         if (this.contextMenuVisible) {
             document.getElementById('contextMenu').classList.remove('show');
-            // No need to show/hide BrowserView since we're not hiding it
+            // Show BrowserView again and refresh bounds
+            ipcRenderer.invoke('show-browser-view').then(() => {
+                setTimeout(() => {
+                    ipcRenderer.invoke('update-browser-view-bounds');
+                }, 100);
+            });
             this.contextMenuVisible = false;
         }
     }

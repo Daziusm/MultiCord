@@ -61,10 +61,7 @@ function createWindow() {
     updateBrowserViewBounds();
   });
 
-  // Open DevTools in development
-  if (process.argv.includes('--dev')) {
-    mainWindow.webContents.openDevTools();
-  }
+  // DevTools disabled by default; use menu/shortcut to open if needed
 }
 
 // Initialize session for a single account
@@ -391,10 +388,7 @@ function createBrowserView(accountId) {
       console.log('⚠️ Failed to inject browser compatibility code:', err.message);
     });
     
-    // Open DevTools for BrowserView in development mode
-    if (process.argv.includes('--dev')) {
-      view.webContents.openDevTools();
-    }
+    // DevTools opening disabled
   });
 
   // Discord finished loading
@@ -707,17 +701,20 @@ function updateBrowserViewBounds() {
   
   const contentBounds = mainWindow.getContentBounds();
   // Get sidebar width from renderer or use default
-  const sidebarWidth = global.sidebarWidth || 240;
-  const resizeHandleWidth = 4;
-  
+  // New layout: header + avatar tabs at top, no sidebar
+  const headerHeight = 56;
+  const tabsMinHeight = 68;        // matches CSS min-height for avatar-tabs
+  const tabsOuterMargins = 0 + 0; // CSS margins top/bottom
+  const topOffset = headerHeight + tabsMinHeight + tabsOuterMargins;
+
   currentView.setBounds({
-    x: sidebarWidth + resizeHandleWidth,
-    y: 0,
-    width: contentBounds.width - sidebarWidth - resizeHandleWidth,
-    height: contentBounds.height
+    x: 0,
+    y: topOffset,
+    width: contentBounds.width,
+    height: contentBounds.height - topOffset
   });
   
-  console.log(`📐 Updated BrowserView bounds: x=${sidebarWidth + resizeHandleWidth}, y=0, width=${contentBounds.width - sidebarWidth - resizeHandleWidth}, height=${contentBounds.height}`);
+  console.log(`📐 Updated BrowserView bounds: x=0, y=${topOffset}, width=${contentBounds.width}, height=${contentBounds.height - topOffset}`);
 }
 
 // Get currently active BrowserView
@@ -836,8 +833,8 @@ ipcMain.handle('reload-account', (event, accountId) => {
 ipcMain.handle('open-devtools', () => {
   const currentView = getCurrentBrowserView();
   if (currentView) {
-    currentView.webContents.openDevTools();
-    return true;
+    // Intentionally do nothing; DevTools disabled by request
+    return false;
   }
   return false;
 });
